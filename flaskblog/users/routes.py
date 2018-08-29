@@ -97,11 +97,11 @@ def reset_token(token):
     if user is None:
         flash('That is an invalid or expired token', 'warning')
         return redirect(url_for('users.reset_request'))
-        form = ResetPasswordForm()
-        if form.validate_on_submit():
-            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            user.password = hashed_password
-            db.session.commit()
-            flash(f'Your password has been updated! You are now able to log in', 'success')
-            return redirect(url_for('users.login'))
-        return render_template('reset_token.html', title='Reset password', form=form)
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        flash(f'Your password has been updated! You are now able to log in', 'success')
+        return redirect(url_for('users.login'))
+    return render_template('reset_token.html', title='Reset password', form=form)
